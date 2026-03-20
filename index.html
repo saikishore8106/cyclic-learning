@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyclic Learning — Master Any Tech Skill</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    :root {
+      --primary: #6C63FF; --secondary: #FF6584; --accent: #43E97B;
+      --bg: #0A0A14; --surface: #12121F; --surface2: #1A1A2E;
+      --text: #E8E8F0; --muted: #8888AA; --border: rgba(255,255,255,0.07);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    .bg-blobs { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.18; animation: drift 18s ease-in-out infinite alternate; }
+    .blob1 { width:600px; height:600px; background:#6C63FF; top:-200px; left:-200px; animation-duration:20s; }
+    .blob2 { width:500px; height:500px; background:#FF6584; bottom:-150px; right:-150px; animation-duration:25s; animation-delay:-8s; }
+    .blob3 { width:400px; height:400px; background:#43E97B; top:40%; left:60%; animation-duration:22s; animation-delay:-4s; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(40px,60px) scale(1.1); } }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 5%; background: rgba(10,10,20,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; background: linear-gradient(135deg, #6C63FF, #43E97B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color .3s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: linear-gradient(135deg, #6C63FF, #9B59B6); color: #fff; border: none; padding: 0.55rem 1.4rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: transform .2s, box-shadow .2s; text-decoration: none; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(108,99,255,0.45); }
+    .hero { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 5% 5rem; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.4); padding: 0.4rem 1.1rem; border-radius: 50px; font-size: 0.82rem; font-weight: 600; color: #A89BFF; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.8rem; }
+    .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+    .hero h1 .highlight { background: linear-gradient(135deg, #6C63FF 0%, #43E97B 60%, #FF6584 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted); max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: linear-gradient(135deg, #6C63FF, #9B59B6); color: #fff; padding: 0.85rem 2.2rem; border: none; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform .2s, box-shadow .2s; text-decoration: none; display: inline-block; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(108,99,255,0.5); }
+    .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.2); color: var(--text); padding: 0.85rem 2.2rem; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s; text-decoration: none; display: inline-block; }
+    .btn-outline:hover { border-color: #6C63FF; background: rgba(108,99,255,0.08); }
+    .stats-strip { position: relative; z-index: 1; display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; padding: 2.5rem 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #6C63FF, #43E97B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+    section { position: relative; z-index: 1; }
+    .section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #6C63FF; margin-bottom: 1rem; }
+    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.2rem; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 580px; line-height: 1.75; }
+    .what-is { padding: 7rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .what-visual { display: flex; align-items: center; justify-content: center; }
+    .cycle-visual { width: 360px; height: 360px; position: relative; }
+    .cycle-ring { position: absolute; border-radius: 50%; border: 2px solid transparent; animation: spin linear infinite; }
+    .cycle-ring:nth-child(1) { inset: 0; border-top-color: #6C63FF; border-right-color: rgba(108,99,255,0.3); animation-duration: 8s; }
+    .cycle-ring:nth-child(2) { inset: 30px; border-top-color: #43E97B; border-right-color: rgba(67,233,123,0.3); animation-duration: 12s; animation-direction: reverse; }
+    .cycle-ring:nth-child(3) { inset: 60px; border-top-color: #FF6584; border-right-color: rgba(255,101,132,0.3); animation-duration: 16s; }
+    .cycle-ring:nth-child(4) { inset: 90px; border-top-color: #F7C873; border-right-color: rgba(247,200,115,0.3); animation-duration: 10s; animation-direction: reverse; }
+    .cycle-ring:nth-child(5) { inset: 120px; border-top-color: #A89BFF; border-right-color: rgba(168,155,255,0.3); animation-duration: 14s; }
+    .cycle-center { position: absolute; inset: 150px; background: linear-gradient(135deg, #6C63FF, #43E97B); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; box-shadow: 0 0 40px rgba(108,99,255,0.5); }
+    .cycle-center-text { font-size: 0.7rem; font-weight: 700; color: #fff; letter-spacing: 0.05em; }
+    .cycle-center-num { font-size: 1.6rem; font-weight: 800; color: #fff; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .what-points { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+    .what-point { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.2rem; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); transition: border-color .3s, transform .3s; }
+    .what-point:hover { border-color: #6C63FF; transform: translateX(6px); }
+    .what-point-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .what-point-text strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .what-point-text span { font-size: 0.85rem; color: var(--muted); }
+    .cycles-section { padding: 7rem 5%; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cycles-header { text-align: center; margin-bottom: 4rem; }
+    .cycles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1300px; margin: 0 auto; }
+    .cycle-card { position: relative; overflow: hidden; background: var(--surface2); border-radius: 20px; border: 1px solid var(--border); padding: 2rem 1.8rem 1.8rem; transition: transform .35s, box-shadow .35s, border-color .35s; cursor: default; }
+    .cycle-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 20px 20px 0 0; }
+    .cycle-card:hover { transform: translateY(-8px); }
+    .cycle-card.c1::before { background: linear-gradient(90deg, #6C63FF, #A89BFF); }
+    .cycle-card.c1:hover { border-color: #6C63FF; box-shadow: 0 20px 60px rgba(108,99,255,0.25); }
+    .cycle-card.c2::before { background: linear-gradient(90deg, #43E97B, #38F9D7); }
+    .cycle-card.c2:hover { border-color: #43E97B; box-shadow: 0 20px 60px rgba(67,233,123,0.2); }
+    .cycle-card.c3::before { background: linear-gradient(90deg, #FF6584, #FF8E53); }
+    .cycle-card.c3:hover { border-color: #FF6584; box-shadow: 0 20px 60px rgba(255,101,132,0.2); }
+    .cycle-card.c4::before { background: linear-gradient(90deg, #F7C873, #FF9A44); }
+    .cycle-card.c4:hover { border-color: #F7C873; box-shadow: 0 20px 60px rgba(247,200,115,0.2); }
+    .cycle-card.c5::before { background: linear-gradient(90deg, #38F9D7, #43E97B); }
+    .cycle-card.c5:hover { border-color: #38F9D7; box-shadow: 0 20px 60px rgba(56,249,215,0.2); }
+    .cycle-num { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+    .cycle-num-badge { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-size: 0.8rem; font-weight: 800; }
+    .c1 .cycle-num-badge { background: rgba(108,99,255,0.2); color: #A89BFF; }
+    .c2 .cycle-num-badge { background: rgba(67,233,123,0.2); color: #43E97B; }
+    .c3 .cycle-num-badge { background: rgba(255,101,132,0.2); color: #FF6584; }
+    .c4 .cycle-num-badge { background: rgba(247,200,115,0.2); color: #F7C873; }
+    .c5 .cycle-num-badge { background: rgba(56,249,215,0.2); color: #38F9D7; }
+    .cycle-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .cycle-tagline { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.2rem; font-style: italic; }
+    .cycle-tasks { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .cycle-task { display: flex; align-items: center; gap: 0.7rem; font-size: 0.88rem; color: var(--text); }
+    .cycle-task-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .c1 .cycle-task-dot { background: #6C63FF; } .c2 .cycle-task-dot { background: #43E97B; }
+    .c3 .cycle-task-dot { background: #FF6584; } .c4 .cycle-task-dot { background: #F7C873; }
+    .c5 .cycle-task-dot { background: #38F9D7; }
+    .cycle-depth-bar { background: rgba(255,255,255,0.05); border-radius: 50px; height: 6px; overflow: hidden; }
+    .cycle-depth-fill { height: 100%; border-radius: 50px; animation: growBar 1.5s ease-out forwards; animation-play-state: paused; }
+    .cycle-card:hover .cycle-depth-fill { animation-play-state: running; }
+    @keyframes growBar { from { width: 0; } }
+    .c1 .cycle-depth-fill { background: linear-gradient(90deg,#6C63FF,#A89BFF); width:20%; }
+    .c2 .cycle-depth-fill { background: linear-gradient(90deg,#43E97B,#38F9D7); width:40%; }
+    .c3 .cycle-depth-fill { background: linear-gradient(90deg,#FF6584,#FF8E53); width:60%; }
+    .c4 .cycle-depth-fill { background: linear-gradient(90deg,#F7C873,#FF9A44); width:80%; }
+    .c5 .cycle-depth-fill { background: linear-gradient(90deg,#38F9D7,#43E97B); width:100%; }
+    .depth-label { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted); margin-top: 0.4rem; }
+    .spiral-section { padding: 7rem 5%; }
+    .spiral-header { text-align: center; margin-bottom: 5rem; }
+    .timeline { max-width: 900px; margin: 0 auto; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); background: linear-gradient(to bottom, #6C63FF, #43E97B, #FF6584, #F7C873, #38F9D7); }
+    .tl-item { display: flex; gap: 2rem; margin-bottom: 3.5rem; align-items: center; }
+    .tl-item:nth-child(odd) { flex-direction: row; }
+    .tl-item:nth-child(even) { flex-direction: row-reverse; }
+    .tl-content { flex: 1; background: var(--surface); border-radius: 16px; border: 1px solid var(--border); padding: 1.5rem 1.6rem; transition: border-color .3s, transform .3s; }
+    .tl-item:nth-child(odd) .tl-content:hover { transform: translateX(-6px); }
+    .tl-item:nth-child(even) .tl-content:hover { transform: translateX(6px); }
+    .tl-content:hover { border-color: #6C63FF; }
+    .tl-node { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; position: relative; z-index: 1; border: 3px solid var(--bg); }
+    .tl-spacer { flex: 1; }
+    .tl-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .tl-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+    .tl-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+    .science-section { padding: 7rem 5%; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .science-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 3rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .science-card { background: var(--surface2); border-radius: 16px; border: 1px solid var(--border); padding: 2rem 1.6rem; text-align: center; transition: transform .3s, border-color .3s; }
+    .science-card:hover { transform: translateY(-6px); border-color: #6C63FF; }
+    .science-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .science-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .science-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+    .who-section { padding: 7rem 5%; }
+    .who-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-top: 3rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+    .who-card { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); padding: 1.8rem 1.4rem; text-align: center; transition: transform .3s, border-color .3s; }
+    .who-card:hover { transform: translateY(-6px); border-color: #FF6584; }
+    .who-emoji { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .who-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
+    .who-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+    .quickstart { padding: 7rem 5%; max-width: 800px; margin: 0 auto; }
+    .quickstart-title { text-align: center; }
+    .qs-steps { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
+    .qs-step { background: var(--surface); border-radius: 14px; border: 1px solid var(--border); padding: 1.4rem 1.6rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: transform .3s, border-color .3s; }
+    .qs-step:hover { transform: translateX(8px); border-color: #6C63FF; }
+    .qs-step-num { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg, #6C63FF, #9B59B6); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; color: #fff; }
+    .qs-step-text strong { display: block; margin-bottom: 0.3rem; font-size: 0.95rem; }
+    .qs-step-text span { font-size: 0.85rem; color: var(--muted); }
+    .cta-section { padding: 7rem 5%; text-align: center; background: var(--surface); border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(108,99,255,0.15) 0%, transparent 70%); }
+    .cta-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; position: relative; z-index: 1; margin-bottom: 1rem; }
+    .cta-section p { color: var(--muted); font-size: 1.1rem; position: relative; z-index: 1; margin-bottom: 2.5rem; }
+    footer { text-align: center; padding: 2rem 5%; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); }
+    footer span { background: linear-gradient(135deg, #6C63FF, #43E97B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 900px) {
+      .what-is { grid-template-columns: 1fr; text-align: center; }
+      .what-visual { margin-bottom: 2rem; order: -1; }
+      .cycle-visual { width: 260px; height: 260px; }
+      .cycle-center { inset: 108px; }
+      .timeline::before { left: 24px; }
+      .tl-item { flex-direction: row !important; }
+      .tl-spacer { display: none; }
+    }
+    @media (max-width: 600px) { .nav-links { display: none; } .hero h1 { font-size: 2.5rem; } .cycles-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="bg-blobs"><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div></div>
+  <nav>
+    <div class="nav-logo">&#x27F3; CyclicLearning</div>
+    <div class="nav-links"><a href="#what-is">What Is It</a><a href="#cycles">The Cycles</a><a href="#science">Why It Works</a><a href="#who">Who Is It For</a></div>
+    <a href="#quickstart" class="nav-cta">Start Learning &rarr;</a>
+  </nav>
+  <section class="hero">
+    <div class="hero-badge"><span>&#x1F504;</span> A Learning Framework That Actually Sticks</div>
+    <h1>Don't Just Learn.<br/>Learn in <span class="highlight">Cycles.</span></h1>
+    <p class="hero-sub">Master any skill &mdash; Python, Machine Learning, Data Science, Web Dev &mdash; by spiraling through knowledge in deliberate cycles. Each loop takes you deeper, faster, and more confidently than linear learning ever could.</p>
+    <div class="hero-actions"><a href="#cycles" class="btn-primary">Explore the 5 Cycles</a><a href="#what-is" class="btn-outline">How It Works</a></div>
+  </section>
+  <div class="stats-strip">
+    <div class="stat fade-up"><div class="stat-num">5&times;</div><div class="stat-label">Faster Mastery</div></div>
+    <div class="stat fade-up"><div class="stat-num">80%</div><div class="stat-label">Better Retention</div></div>
+    <div class="stat fade-up"><div class="stat-num">&infin;</div><div class="stat-label">Works for Any Tech</div></div>
+    <div class="stat fade-up"><div class="stat-num">5</div><div class="stat-label">Cycles to Mastery</div></div>
+  </div>
+  <section class="what-is" id="what-is">
+    <div class="what-visual fade-up">
+      <div class="cycle-visual">
+        <div class="cycle-ring"></div><div class="cycle-ring"></div><div class="cycle-ring"></div><div class="cycle-ring"></div><div class="cycle-ring"></div>
+        <div class="cycle-center"><div class="cycle-center-text">CYCLES TO</div><div class="cycle-center-num">MASTERY</div></div>
+      </div>
+    </div>
+    <div class="what-text fade-up">
+      <div class="section-label">The Concept</div>
+      <h2 class="section-title">Not a straight line &mdash;<br/>a <em style="color:#6C63FF">rising spiral.</em></h2>
+      <p class="section-sub">Traditional learning tries to cover everything once, linearly. Cyclic Learning revisits the same landscape multiple times &mdash; but each pass goes deeper. You build a broad mental map first, then sharpen detail with every loop.</p>
+      <div class="what-points">
+        <div class="what-point"><div class="what-point-icon">&#x1F5FA;&#xFE0F;</div><div class="what-point-text"><strong>Wide First, Deep Later</strong><span>Start with the full terrain. Understand the forest before individual trees.</span></div></div>
+        <div class="what-point"><div class="what-point-icon">&#x1F501;</div><div class="what-point-text"><strong>Spaced Repetition Built In</strong><span>Every cycle naturally revisits earlier concepts &mdash; fighting the forgetting curve.</span></div></div>
+        <div class="what-point"><div class="what-point-icon">&#x1F680;</div><div class="what-point-text"><strong>Momentum &amp; Confidence</strong><span>Quick wins in Cycle 1 fuel the motivation to go deeper in Cycles 2&ndash;5.</span></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="cycles-section" id="cycles">
+    <div class="cycles-header fade-up"><div class="section-label">The Framework</div><h2 class="section-title">The 5 Cycles of Mastery</h2><p class="section-sub">Each cycle builds on the last. Hover a card to see your depth grow.</p></div>
+    <div class="cycles-grid">
+      <div class="cycle-card c1 fade-up"><div class="cycle-num"><span class="cycle-num-badge">1</span> Cycle One</div><div class="cycle-title">&#x1F331; The Explorer &mdash; Breadth Pass</div><div class="cycle-tagline">"Plant a seed in every garden."</div><div class="cycle-tasks"><div class="cycle-task"><span class="cycle-task-dot"></span>Python fundamentals &mdash; variables, loops, functions</div><div class="cycle-task"><span class="cycle-task-dot"></span>Statistics basics &mdash; mean, median, distributions</div><div class="cycle-task"><span class="cycle-task-dot"></span>ML overview &mdash; supervised vs unsupervised</div><div class="cycle-task"><span class="cycle-task-dot"></span>Tools intro &mdash; Jupyter, pandas, scikit-learn</div><div class="cycle-task"><span class="cycle-task-dot"></span>Goal: Comfortable with every topic name</div></div><div class="cycle-depth-bar"><div class="cycle-depth-fill"></div></div><div class="depth-label"><span>Surface</span><span>Depth: 20%</span></div></div>
+      <div class="cycle-card c2 fade-up"><div class="cycle-num"><span class="cycle-num-badge">2</span> Cycle Two</div><div class="cycle-title">&#x1F50D; The Connector &mdash; Depth Pass</div><div class="cycle-tagline">"Water the seeds. Watch roots form."</div><div class="cycle-tasks"><div class="cycle-task"><span class="cycle-task-dot"></span>Revise Cycle 1 topics in 2&ndash;3 focused days</div><div class="cycle-task"><span class="cycle-task-dot"></span>Python OOP, decorators, comprehensions</div><div class="cycle-task"><span class="cycle-task-dot"></span>Probability, Bayes theorem, hypothesis testing</div><div class="cycle-task"><span class="cycle-task-dot"></span>ML algorithms in detail &mdash; Linear Regression, Trees</div><div class="cycle-task"><span class="cycle-task-dot"></span>Goal: Explain any topic to a friend</div></div><div class="cycle-depth-bar"><div class="cycle-depth-fill"></div></div><div class="depth-label"><span>Surface</span><span>Depth: 40%</span></div></div>
+      <div class="cycle-card c3 fade-up"><div class="cycle-num"><span class="cycle-num-badge">3</span> Cycle Three</div><div class="cycle-title">&#x1F6E0;&#xFE0F; The Builder &mdash; Project Pass</div><div class="cycle-tagline">"Build. Break. Fix. Understand."</div><div class="cycle-tasks"><div class="cycle-task"><span class="cycle-task-dot"></span>Revise Cycles 1 &amp; 2 with active recall</div><div class="cycle-task"><span class="cycle-task-dot"></span>Build a mini data pipeline from scratch</div><div class="cycle-task"><span class="cycle-task-dot"></span>Real dataset: EDA, cleaning, model training</div><div class="cycle-task"><span class="cycle-task-dot"></span>Debug, iterate, and document your work</div><div class="cycle-task"><span class="cycle-task-dot"></span>Goal: A working portfolio project</div></div><div class="cycle-depth-bar"><div class="cycle-depth-fill"></div></div><div class="depth-label"><span>Surface</span><span>Depth: 60%</span></div></div>
+      <div class="cycle-card c4 fade-up"><div class="cycle-num"><span class="cycle-num-badge">4</span> Cycle Four</div><div class="cycle-title">&#x26A1; The Optimizer &mdash; Mastery Pass</div><div class="cycle-tagline">"Polish rough diamonds into gems."</div><div class="cycle-tasks"><div class="cycle-task"><span class="cycle-task-dot"></span>Full review &mdash; all three prior cycles in 1 week</div><div class="cycle-task"><span class="cycle-task-dot"></span>Advanced topics: Deep Learning, Feature Eng.</div><div class="cycle-task"><span class="cycle-task-dot"></span>Optimize, tune, and deploy your projects</div><div class="cycle-task"><span class="cycle-task-dot"></span>Teach others or write a blog post</div><div class="cycle-task"><span class="cycle-task-dot"></span>Goal: Confidently answer interview questions</div></div><div class="cycle-depth-bar"><div class="cycle-depth-fill"></div></div><div class="depth-label"><span>Surface</span><span>Depth: 80%</span></div></div>
+      <div class="cycle-card c5 fade-up"><div class="cycle-num"><span class="cycle-num-badge">5</span> Cycle Five</div><div class="cycle-title">&#x1F3C6; The Expert &mdash; Integration Pass</div><div class="cycle-tagline">"You're no longer learning. You're creating."</div><div class="cycle-tasks"><div class="cycle-task"><span class="cycle-task-dot"></span>Quick-scan all 4 prior cycles in 3 days</div><div class="cycle-task"><span class="cycle-task-dot"></span>Build something original &mdash; your signature project</div><div class="cycle-task"><span class="cycle-task-dot"></span>Contribute to open source or mentor someone</div><div class="cycle-task"><span class="cycle-task-dot"></span>Connect concepts across domains creatively</div><div class="cycle-task"><span class="cycle-task-dot"></span>Goal: Recognized expertise. Ready to ship.</div></div><div class="cycle-depth-bar"><div class="cycle-depth-fill"></div></div><div class="depth-label"><span>Surface</span><span>Depth: 100% &#x2713;</span></div></div>
+    </div>
+  </section>
+  <section class="spiral-section" id="timeline">
+    <div class="spiral-header fade-up"><div class="section-label">Journey Map</div><h2 class="section-title">Your Learning Timeline</h2><p class="section-sub">A visual walk through how each cycle builds on the last.</p></div>
+    <div class="timeline">
+      <div class="tl-item fade-up"><div class="tl-content"><div class="tl-meta">Week 1&ndash;3 &middot; Cycle 1</div><div class="tl-title">&#x1F331; Wide Coverage &mdash; Zero Pressure</div><div class="tl-desc">Breeze through Python, stats, and ML conceptually. Don't memorize &mdash; absorb. The goal is familiarity, not perfection. Your brain is building a scaffold.</div></div><div class="tl-node" style="background:linear-gradient(135deg,#6C63FF,#A89BFF)">&#x1F331;</div><div class="tl-spacer"></div></div>
+      <div class="tl-item fade-up"><div class="tl-spacer"></div><div class="tl-node" style="background:linear-gradient(135deg,#43E97B,#38F9D7)">&#x1F50D;</div><div class="tl-content"><div class="tl-meta">Week 4&ndash;7 &middot; Cycle 2</div><div class="tl-title">&#x1F50D; Revisit and Go Deeper</div><div class="tl-desc">Return to every topic from Cycle 1 but now with context. Previously confusing things suddenly click. You connect dots you didn't even know existed.</div></div></div>
+      <div class="tl-item fade-up"><div class="tl-content"><div class="tl-meta">Week 8&ndash;12 &middot; Cycle 3</div><div class="tl-title">&#x1F6E0;&#xFE0F; Build Real Things &mdash; Learn by Doing</div><div class="tl-desc">Theory transforms into skill through practice. Each bug you fix teaches you more than any tutorial. Your first project makes the abstract concrete.</div></div><div class="tl-node" style="background:linear-gradient(135deg,#FF6584,#FF8E53)">&#x1F6E0;&#xFE0F;</div><div class="tl-spacer"></div></div>
+      <div class="tl-item fade-up"><div class="tl-spacer"></div><div class="tl-node" style="background:linear-gradient(135deg,#F7C873,#FF9A44)">&#x26A1;</div><div class="tl-content"><div class="tl-meta">Week 13&ndash;18 &middot; Cycle 4</div><div class="tl-title">&#x26A1; Advanced Topics &amp; Optimization</div><div class="tl-desc">Topics that once looked impossible now feel like natural extensions of what you know. Advanced material clicks fast because your foundation is solid.</div></div></div>
+      <div class="tl-item fade-up"><div class="tl-content"><div class="tl-meta">Week 19&ndash;24 &middot; Cycle 5</div><div class="tl-title">&#x1F3C6; Integration &mdash; You've Become the Expert</div><div class="tl-desc">You're no longer following a path &mdash; you're creating one. Your unique perspective, built through five spiraling cycles, is your greatest professional asset.</div></div><div class="tl-node" style="background:linear-gradient(135deg,#38F9D7,#43E97B)">&#x1F3C6;</div><div class="tl-spacer"></div></div>
+    </div>
+  </section>
+  <section class="science-section" id="science">
+    <div style="text-align:center" class="fade-up"><div class="section-label">The Science</div><h2 class="section-title">Why Cyclic Learning Works</h2><p class="section-sub" style="margin:0 auto">It's not magic &mdash; it's cognitive science applied to skill building.</p></div>
+    <div class="science-grid">
+      <div class="science-card fade-up"><div class="science-icon">&#x1F9E0;</div><h3>Spaced Repetition</h3><p>Revisiting concepts after intervals dramatically improves long-term memory. Cyclic Learning makes this automatic &mdash; every new cycle is a spaced review.</p></div>
+      <div class="science-card fade-up"><div class="science-icon">&#x1F578;&#xFE0F;</div><h3>Schema Building</h3><p>Your brain learns by connecting new info to existing frameworks. A wide Cycle 1 creates the schema that makes every future cycle stick faster.</p></div>
+      <div class="science-card fade-up"><div class="science-icon">&#x1F4C9;</div><h3>Forgetting Curve</h3><p>Ebbinghaus showed we forget ~70% within 24 hours without review. Cyclic learning combats this by design &mdash; each cycle is a strategic memory refresh.</p></div>
+      <div class="science-card fade-up"><div class="science-icon">&#x1F3AF;</div><h3>Desirable Difficulty</h3><p>Learning that feels slightly hard but achievable creates stronger memory traces. Each cycle raises the challenge just enough to trigger deep encoding.</p></div>
+    </div>
+  </section>
+  <section class="who-section" id="who">
+    <div style="text-align:center" class="fade-up"><div class="section-label">For Everyone</div><h2 class="section-title">Who Is Cyclic Learning For?</h2></div>
+    <div class="who-grid">
+      <div class="who-card fade-up"><div class="who-emoji">&#x1F393;</div><div class="who-title">Students</div><div class="who-desc">Cut through information overload. Build genuine understanding, not just exam answers.</div></div>
+      <div class="who-card fade-up"><div class="who-emoji">&#x1F4BC;</div><div class="who-title">Professionals</div><div class="who-desc">Upskill without sacrificing productivity. Learn in cycles around your 9-to-5.</div></div>
+      <div class="who-card fade-up"><div class="who-emoji">&#x1F50D;</div><div class="who-title">Job Seekers</div><div class="who-desc">Build job-ready skills in 3&ndash;6 months &mdash; not years. Portfolio-first, theory-supported.</div></div>
+      <div class="who-card fade-up"><div class="who-emoji">&#x1F680;</div><div class="who-title">Career Switchers</div><div class="who-desc">Transfer your existing mental models into a new field &mdash; fast, systematic, confident.</div></div>
+      <div class="who-card fade-up"><div class="who-emoji">&#x1F9D1;&#x200D;&#x1F4BB;</div><div class="who-title">Self-Learners</div><div class="who-desc">No classroom? No problem. This framework is designed for disciplined self-study.</div></div>
+    </div>
+  </section>
+  <section class="quickstart" id="quickstart">
+    <div class="quickstart-title fade-up"><div class="section-label">Get Started</div><h2 class="section-title">How to Start Your First Cycle Today</h2></div>
+    <div class="qs-steps">
+      <div class="qs-step fade-up"><div class="qs-step-num">1</div><div class="qs-step-text"><strong>Choose Your Domain</strong><span>Pick one technology &mdash; Python + ML, Web Dev, Data Engineering &mdash; and commit to it for the full 5 cycles.</span></div></div>
+      <div class="qs-step fade-up"><div class="qs-step-num">2</div><div class="qs-step-text"><strong>Map Out Your Cycle 1 Topics</strong><span>List every major sub-topic in your domain. Don't study yet &mdash; just identify them. This is your exploration map.</span></div></div>
+      <div class="qs-step fade-up"><div class="qs-step-num">3</div><div class="qs-step-text"><strong>Set a Lightweight Time Box</strong><span>Dedicate 1&ndash;2 hours daily for Cycle 1. Move fast. Spend 2&ndash;3 days max per topic. Surface-level is the goal.</span></div></div>
+      <div class="qs-step fade-up"><div class="qs-step-num">4</div><div class="qs-step-text"><strong>Log, Don't Memorize</strong><span>Keep a simple notes file. Jot what you encountered, not what you memorized. You'll deepen it in Cycle 2.</span></div></div>
+      <div class="qs-step fade-up"><div class="qs-step-num">5</div><div class="qs-step-text"><strong>After Cycle 1 &mdash; Repeat the Loop</strong><span>Begin Cycle 2: skim your Cycle 1 notes for 2 days, then re-approach every topic &mdash; one layer deeper.</span></div></div>
+    </div>
+  </section>
+  <section class="cta-section">
+    <h2>Your next cycle<br/>starts <span style="background:linear-gradient(135deg,#6C63FF,#43E97B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">right now.</span></h2>
+    <p>Stop waiting to feel "ready." Cycle 1 doesn't require readiness &mdash; just curiosity.</p>
+    <div style="position:relative;z-index:1;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="#cycles" class="btn-primary">View the 5 Cycles</a>
+      <a href="https://github.com/saikishore8106/cyclic-learning" class="btn-outline" target="_blank">&#x2B50; Star on GitHub</a>
+    </div>
+  </section>
+  <footer><p>Built with &#x1F49C; using the <span>Cyclic Learning</span> method itself &nbsp;&middot;&nbsp; Open source on GitHub &nbsp;&middot;&nbsp; Share it. Use it. Improve it.</p></footer>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 0.1 + 's'; observer.observe(el); });
+  </script>
+</body>
+</html>
